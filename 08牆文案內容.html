@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>植樂島 — 08牆視覺示意</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep-green: #1a2e1a;
+    --mid-green: #2d5a27;
+    --leaf-green: #4a8c3f;
+    --accent-green: #7bc67a;
+    --pale-green: #c8e6c9;
+    --warm-white: #f5f0e8;
+    --gold: #c9a84c;
+    --light-gold: #e8d5a3;
+    --text-primary: #f0ebe0;
+    --text-secondary: #b8d4b5;
+    --divider: rgba(122, 198, 122, 0.25);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(122, 198, 122, 0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0e1a0e;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* 整體牆面容器，模擬7190mm比例 */
+  .wall {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: linear-gradient(160deg, #1a2e1a 0%, #0f1f0f 40%, #152515 100%);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  }
+
+  /* 裝飾性背景紋理 */
+  .wall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(74,140,63,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(74,140,63,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* ===== 破題區 ===== */
+  .hero {
+    padding: 56px 60px 48px;
+    border-bottom: 1px solid var(--divider);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .hero-item {
+    padding: 0 40px 0 0;
+    border-right: 1px solid var(--divider);
+  }
+  .hero-item:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
+  .hero-item:nth-child(2) { padding: 0 40px; }
+
+  .hero-number {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--accent-green);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .hero-number span {
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    vertical-align: super;
+  }
+
+  .hero-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .hero-source {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--accent-green);
+    opacity: 0.5;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    border-top: 1px solid rgba(122,198,122,0.15);
+    padding-top: 8px;
+  }
+
+  .hero-statement {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-statement-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--warm-white);
+    line-height: 1.6;
+  }
+
+  .hero-arrow {
+    color: var(--accent-green);
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  /* ===== 區塊標題列 ===== */
+  .section-header {
+    padding: 20px 60px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  /* ===== 欄位卡片格線 ===== */
+  .cards-grid {
+    display: grid;
+    padding: 20px 60px 0;
+    gap: 16px;
+  }
+
+  .cards-grid.family {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .cards-grid.institution {
+    grid-template-columns: repeat(4, 1fr);
+    padding-bottom: 0;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 3px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .card.family-card::before { background: linear-gradient(90deg, var(--leaf-green), var(--accent-green)); }
+  .card.institution-card::before { background: linear-gradient(90deg, var(--gold), var(--light-gold)); }
+
+  .card-number {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    opacity: 0.6;
+  }
+
+  .card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: var(--divider);
+    margin-bottom: 14px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .tag.green {
+    background: rgba(74,140,63,0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(74,140,63,0.25);
+  }
+
+  .tag.gold {
+    background: rgba(201,168,76,0.12);
+    color: var(--light-gold);
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+
+  /* ===== 收尾語 ===== */
+  .footer-statement {
+    padding: 36px 60px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--divider);
+    margin-top: 36px;
+    position: relative;
+  }
+
+  .footer-statement::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .footer-left {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--warm-white);
+    line-height: 1.5;
+  }
+
+  .footer-left em {
+    color: var(--accent-green);
+    font-style: normal;
+  }
+
+  .footer-right {
+    text-align: right;
+  }
+
+  .footer-en {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+  }
+
+  /* ===== 裝飾葉片 SVG ===== */
+  .leaf-deco {
+    position: absolute;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* ===== 地圖欄位特殊樣式 ===== */
+  .card.map-card {
+    grid-column: span 1;
+    position: relative;
+  }
+
+  .map-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .map-dot {
+    font-size: 10px;
+    color: var(--text-secondary);
+    background: rgba(122,198,122,0.08);
+    padding: 2px 7px;
+    border-radius: 10px;
+    border: 1px solid rgba(122,198,122,0.15);
+    font-weight: 300;
+  }
+
+  /* 區塊說明小字 */
+  .section-desc {
+    padding: 8px 60px 0;
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+  }
+
+  /* 響應式 */
+  @media (max-width: 900px) {
+    .cards-grid.family,
+    .cards-grid.institution {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .hero-content { grid-template-columns: 1fr; gap: 24px; }
+    .hero-item { border-right: none; padding: 0 0 24px 0; border-bottom: 1px solid var(--divider); }
+    .hero-item:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 600px) {
+    .cards-grid.family,
+    .cards-grid.institution { grid-template-columns: 1fr; }
+    .wall { padding: 0; }
+    .hero, .section-header, .cards-grid, .footer-statement { padding-left: 20px; padding-right: 20px; }
+    .section-desc { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wall">
+
+  <!-- 裝飾葉片 -->
+  <svg class="leaf-deco" style="top:-20px;right:40px;width:280px;" viewBox="0 0 200 300" fill="none">
+    <path d="M100 280 C20 200, 0 100, 100 10 C200 100, 180 200, 100 280Z" fill="#4a8c3f"/>
+    <path d="M100 280 L100 10" stroke="#7bc67a" stroke-width="1" opacity="0.5"/>
+    <path d="M100 80 C60 90, 30 120, 20 160" stroke="#7bc67a" stroke-width="0.8" opacity="0.4"/>
+    <path d="M100 80 C140 90, 170 120, 180 160" stroke="#7bc67a" stroke-width="0.8" opacity="0.4"/>
+    <path d="M100 140 C70 148, 50 170, 40 200" stroke="#7bc67a" stroke-width="0.8" opacity="0.3"/>
+    <path d="M100 140 C130 148, 150 170, 160 200" stroke="#7bc67a" stroke-width="0.8" opacity="0.3"/>
+  </svg>
+
+  <svg class="leaf-deco" style="bottom:0px;left:20px;width:180px;transform:scaleX(-1) rotate(20deg);" viewBox="0 0 200 300" fill="none">
+    <path d="M100 280 C20 200, 0 100, 100 10 C200 100, 180 200, 100 280Z" fill="#4a8c3f"/>
+    <path d="M100 280 L100 10" stroke="#7bc67a" stroke-width="1" opacity="0.4"/>
+  </svg>
+
+  <!-- ===== 破題區 ===== -->
+  <div class="hero">
+    <div class="hero-tag">Global Context · 世界正在發生什麼</div>
+
+    <div class="hero-content">
+      <div class="hero-item">
+        <div class="hero-number">20<span>%</span></div>
+        <div class="hero-label">全球農業生產力已損失</div>
+        <div class="hero-sub">氣候變遷已讓全球農業生產力比原本可能的水準低了20%。極端高溫、乾旱與洪澇輪番衝擊，全球主要作物產量持續下滑，蔬菜供應越來越不穩定。</div>
+        <div class="hero-sub" style="margin-top:6px;font-size:11px;opacity:0.55;line-height:1.6;">Climate change has already reduced global agricultural productivity by 20% below its potential.<br>気候変動により、世界の農業生産性はすでに20%低下している。</div>
+        <div class="hero-source">資料來源：Cornell University, Nature Climate Change, 2021</div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-number">8.7<span>%</span></div>
+        <div class="hero-label">台灣農地持續流失</div>
+        <div class="hero-sub">過去20年間，台灣耕地從89萬公頃減少至81.3萬公頃，減少8.7%，且每年仍以3,000至4,000公頃的速度持續縮減。農地蓋工廠、豪宅，本土蔬菜的生產基礎正在瓦解，超市進口蔬菜比例逐年攀升。</div>
+        <div class="hero-sub" style="margin-top:6px;font-size:11px;opacity:0.55;line-height:1.6;">Taiwan's farmland has shrunk by 8.7% in 20 years, losing 3,000–4,000 hectares annually.<br>台湾の農地は20年間で8.7%減少し、今も毎年縮小し続けている。</div>
+        <div class="hero-source">資料來源：行政院農業委員會農地資源調查</div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-number">14<span>%</span></div>
+        <div class="hero-label">2050年糧食生產將再下降</div>
+        <div class="hero-sub">若不採取因應措施，到2050年全球糧食生產恐再下降14%。新鮮蔬菜將成為稀缺資源——不是遙遠的預言，而是正在加速的現實。全世界獲取新鮮蔬菜將越來越困難。</div>
+        <div class="hero-sub" style="margin-top:6px;font-size:11px;opacity:0.55;line-height:1.6;">Without action, global food production may decline another 14% by 2050.<br>対策を講じなければ、2050年までに世界の食料生産はさらに14%減少する恐れがある。</div>
+        <div class="hero-source">資料來源：Discover Sustainability, SCOPUS systematic review, 2025</div>
+      </div>
+    </div>
+
+    <div class="hero-statement">
+      <div class="hero-arrow">→</div>
+      <div class="hero-statement-text">
+        農地在消失，氣候在惡化，蔬菜正在加速減少。<br>
+        <span style="font-size:14px;font-weight:400;color:var(--text-secondary);">Farmland is vanishing, climate is worsening, vegetables are rapidly declining. &nbsp;／&nbsp; 農地は消え、気候は悪化し、野菜は急速に減少している。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 個人與家庭 ===== -->
+  <div class="section-header">
+    <div class="section-label">Individual &amp; Family · 個人與家庭 · 個人と家族</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="section-desc">植樂島家用型，為每一個需要新鮮蔬菜的人而存在<br>
+    <span style="font-size:10px;opacity:0.6;">For everyone who needs fresh vegetables · 新鮮な野菜を必要とするすべての人のために</span>
+  </div>
+
+  <div class="cards-grid family">
+
+    <!-- A -->
+    <div class="card family-card">
+      <div class="card-number">A · 家用型 · Home Use</div>
+      <div class="card-title">慢性病患<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Chronic Illness · 慢性疾患</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag green">腎臟病患</span>
+        <span class="tag green">糖尿病患</span>
+        <span class="tag green">高血壓</span>
+        <span class="tag green">高血脂</span>
+        <span class="tag green">高血糖</span>
+        <span class="tag green">癌症康復期</span>
+        <span class="tag green">化療飲食管理</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        台灣263萬腎臟病患、250萬糖尿病患，每天都需要最潔淨的蔬菜。<br>
+        <span style="opacity:0.7;">2.63M kidney & 2.5M diabetes patients in Taiwan need clean vegetables daily.<br>
+        台湾の263万人の腎臓病患者と250万人の糖尿病患者は、毎日最も清潔な野菜を必要としている。</span>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="card family-card">
+      <div class="card-number">B · 家用型 · Home Use</div>
+      <div class="card-title">銀髮族<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Silver Generation · シニア世代</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag green">退休長輩</span>
+        <span class="tag green">空巢期父母</span>
+        <span class="tag green">獨居老人</span>
+        <span class="tag green">生活重心重建</span>
+        <span class="tag green">園藝療癒</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        台灣2025年正式進入超高齡社會，450萬65歲以上長輩需要生活的成就感。<br>
+        <span style="opacity:0.7;">Taiwan entered a super-aged society in 2025, with 4.5M seniors needing purpose.<br>
+        台湾は2025年に超高齢社会に突入し、450万人の高齢者が生きがいを求めている。</span>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="card family-card">
+      <div class="card-number">C · 家用型 · Home Use</div>
+      <div class="card-title">生活風格與健康意識族群<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Health-Conscious Lifestyle · 健康志向ライフスタイル</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag green">重視食安者</span>
+        <span class="tag green">高收入聚會族群</span>
+        <span class="tag green">有機飲食追求者</span>
+        <span class="tag green">單身上班族</span>
+        <span class="tag green">親子教育家庭</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        從餐桌上的話題到孩子的生命教育，植樂島讓生活更有溫度。<br>
+        <span style="opacity:0.7;">From dinner table conversations to children's education, Plant Island adds warmth to life.<br>
+        食卓の話題から子どもの教育まで、植樂島が生活に温もりをもたらす。</span>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="card family-card">
+      <div class="card-number">D · 家用型 · Home Use</div>
+      <div class="card-title">信仰與飲食潔淨需求族群<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Faith-Based Dietary Needs · 信仰と食の清潔さ</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag green">清真 Halal</span>
+        <span class="tag green">佛素族群</span>
+        <span class="tag green">基督徒蔬食</span>
+        <span class="tag green">宗教飲食潔淨需求</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        全程可追溯、零農藥，天然符合各宗教對潔淨食物的最高要求。<br>
+        <span style="opacity:0.7;">Fully traceable, zero pesticides — naturally meeting the highest religious purity standards.<br>
+        完全なトレーサビリティと無農薬で、各宗教の最高水準の食の清潔さに応える。</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== 機構與社會 ===== -->
+  <div class="section-header" style="margin-top:28px;">
+    <div class="section-label" style="color:var(--gold);">Institution &amp; Society · 機構與社會 · 機関と社会</div>
+    <div class="section-line" style="background:linear-gradient(90deg, var(--gold), transparent);"></div>
+  </div>
+  <div class="section-desc">單元式商用型，從一間企業到一個國家，我們都能做<br>
+    <span style="font-size:10px;opacity:0.6;">Commercial model — from a single enterprise to an entire nation · 一つの企業から一つの国まで、私たちにできます</span>
+  </div>
+
+  <div class="cards-grid institution">
+
+    <!-- E -->
+    <div class="card institution-card">
+      <div class="card-number">E · 商用型 · Commercial</div>
+      <div class="card-title">企業 ESG<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Corporate ESG · 企業ESG</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag gold">科技園區員工餐廳</span>
+        <span class="tag gold">企業永續報告</span>
+        <span class="tag gold">辦公室綠化</span>
+        <span class="tag gold">員工健康福利</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        讓永續不只是口號，而是員工每天都能感受到的真實體驗。<br>
+        <span style="opacity:0.7;">Make sustainability tangible — something employees experience every single day.<br>
+        持続可能性をスローガンではなく、社員が毎日感じられるリアルな体験に。</span>
+      </div>
+    </div>
+
+    <!-- F -->
+    <div class="card institution-card">
+      <div class="card-number">F · 商用型 · Commercial</div>
+      <div class="card-title">醫療機構<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Medical Institutions · 医療機関</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag gold">洗腎中心</span>
+        <span class="tag gold">糖尿病衛教診所</span>
+        <span class="tag gold">腫瘤科病房</span>
+        <span class="tag gold">健康管理中心</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        讓每一位病患都能在治療期間吃到最潔淨的蔬菜，從飲食根本支持康復。<br>
+        <span style="opacity:0.7;">Every patient deserves the cleanest vegetables during treatment to support recovery.<br>
+        すべての患者が治療中に最も清潔な野菜を食べ、食事から回復を支える。</span>
+      </div>
+    </div>
+
+    <!-- G -->
+    <div class="card institution-card">
+      <div class="card-number">G · 商用型 · Commercial</div>
+      <div class="card-title">社區與照護機構<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">Community & Care · コミュニティとケア</span></div>
+      <div class="card-divider"></div>
+      <div class="card-tags">
+        <span class="tag gold">養老中心</span>
+        <span class="tag gold">社區關懷據點</span>
+        <span class="tag gold">身心障礙機構</span>
+        <span class="tag gold">偏鄉學校</span>
+        <span class="tag gold">部落社區</span>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--text-secondary);line-height:1.7;font-weight:300;">
+        在地種植、在地供應，讓每個社區都能擁有自己的新鮮蔬菜來源。<br>
+        <span style="opacity:0.7;">Grow local, supply local — every community deserves its own fresh vegetable source.<br>
+        地元で育て、地元で供給する。すべてのコミュニティが自分たちの新鮮野菜を持てるように。</span>
+      </div>
+    </div>
+
+    <!-- H -->
+    <div class="card institution-card map-card">
+      <div class="card-number">H · 商用型 · Commercial</div>
+      <div class="card-title">國際市場<br><span style="font-size:12px;font-weight:400;color:var(--text-secondary);">International Markets · 国際市場</span></div>
+      <div class="card-divider"></div>
+      <div style="font-size:11px;color:var(--text-secondary);margin-bottom:8px;font-weight:300;">日本 · 東南亞 · 中東<br><span style="font-size:10px;opacity:0.7;">Japan · Southeast Asia · Middle East · 日本・東南アジア・中東</span></div>
+      <div class="map-dots" style="margin-bottom:12px;">
+        <span class="map-dot">日本</span>
+        <span class="map-dot">馬來西亞</span>
+        <span class="map-dot">菲律賓</span>
+        <span class="map-dot">越南</span>
+        <span class="map-dot">泰國</span>
+        <span class="map-dot">柬埔寨</span>
+        <span class="map-dot">新加坡</span>
+        <span class="map-dot">中東</span>
+      </div>
+      <div style="font-size:11px;color:var(--text-secondary);margin-bottom:8px;font-weight:300;">太平洋島國<br><span style="font-size:10px;opacity:0.7;">Pacific Island Nations · 太平洋島嶼諸国</span></div>
+      <div class="map-dots">
+        <span class="map-dot">關島</span>
+        <span class="map-dot">塞班島</span>
+        <span class="map-dot">帛琉</span>
+        <span class="map-dot">馬紹爾群島</span>
+        <span class="map-dot">諾魯</span>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--text-secondary);font-weight:300;opacity:0.8;">密克羅尼西亞聯邦 · Federated States of Micronesia · ミクロネシア連邦</div>
+      <div class="map-dots" style="margin-top:5px;">
+        <span class="map-dot" style="font-size:10px;">雅浦</span>
+        <span class="map-dot" style="font-size:10px;">楚克島</span>
+        <span class="map-dot" style="font-size:10px;">波納佩</span>
+        <span class="map-dot" style="font-size:10px;">科斯雷</span>
+      </div>
+      <div style="margin-top:12px;font-size:10px;color:var(--accent-green);font-weight:300;letter-spacing:0.05em;">
+        ✦ 已有實質網絡佈局 · Established network presence · 実質的なネットワーク構築済み
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== 收尾語 ===== -->
+  <div class="footer-statement">
+    <div class="footer-left">
+      從<em>一個人</em>到<em>一個國家</em>，<br>我們都能做。
+    </div>
+    <div class="footer-right">
+      <div class="footer-en">
+        From a single person to an entire nation,<br>
+        Plant Island is ready.<br>
+        <span style="font-size:10px;opacity:0.5;display:block;margin-top:6px;">一人の人間から一つの国まで、植樂島にできます。</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
