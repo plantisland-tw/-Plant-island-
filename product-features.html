@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>植樂島 — 智慧水耕種植機</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3d2b;
+    --green-mid: #2d6a4f;
+    --green-bright: #52b788;
+    --green-light: #b7e4c7;
+    --green-pale: #d8f3dc;
+    --cream: #faf7f0;
+    --warm-white: #fffdf7;
+    --gold: #c9973a;
+    --gold-light: #f4e4be;
+    --red-soft: #c0392b;
+    --text-dark: #1c1c1c;
+    --text-mid: #444;
+    --text-muted: #777;
+    --serif: 'Noto Serif TC', serif;
+    --sans: 'Noto Sans TC', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--text-dark);
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── UTILITIES ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 96px 0; }
+  .section-alt { background: var(--warm-white); }
+  .section-dark { background: var(--green-deep); color: white; }
+  .section-green { background: var(--green-pale); }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    border: 1.5px solid var(--green-mid);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .tag-gold { color: var(--gold); border-color: var(--gold); }
+  .tag-white { color: var(--green-light); border-color: var(--green-light); }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--green-deep);
+    margin-bottom: 16px;
+  }
+  .section-title.white { color: white; }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 56px;
+    max-width: 600px;
+  }
+  .section-sub.white { color: rgba(255,255,255,0.65); }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--green-bright);
+    margin: 20px 0 40px;
+  }
+  .divider-gold { background: var(--gold); }
+
+  /* ── FADE IN ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ════════════════════════════
+     HERO
+  ════════════════════════════ */
+  #hero {
+    background: var(--green-deep);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 32px;
+    text-align: center;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 30%, rgba(82,183,136,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,151,58,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-leaf {
+    position: absolute;
+    opacity: 0.04;
+    font-size: 400px;
+    top: -80px;
+    right: -80px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(30px, 5vw, 60px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 24px;
+    max-width: 800px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .hero-title span {
+    color: var(--green-bright);
+    position: relative;
+  }
+
+  .hero-slogan {
+    font-family: var(--serif);
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+    margin-bottom: 48px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--green-bright);
+    color: var(--green-deep);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px 48px;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    margin-bottom: 64px;
+  }
+  .hero-cta:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(82,183,136,0.35); }
+
+  .hero-badges {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 40px;
+    width: 100%;
+    max-width: 700px;
+  }
+  .hero-badge {
+    text-align: center;
+  }
+  .hero-badge-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green-bright);
+    display: block;
+  }
+  .hero-badge-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ════════════════════════════
+     RESONANCE — 6 PERSONAS
+  ════════════════════════════ */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .persona-card {
+    background: white;
+    border-radius: 4px;
+    padding: 32px 28px;
+    border-top: 4px solid var(--green-bright);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .persona-card::after {
+    content: attr(data-emoji);
+    position: absolute;
+    right: -8px;
+    bottom: -8px;
+    font-size: 72px;
+    opacity: 0.06;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .persona-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+  .persona-card.accent-red { border-top-color: var(--red-soft); }
+  .persona-card.accent-gold { border-top-color: var(--gold); }
+  .persona-card.accent-blue { border-top-color: #2980b9; }
+  .persona-card.accent-purple { border-top-color: #8e44ad; }
+  .persona-card.accent-teal { border-top-color: #16a085; }
+
+  .persona-emoji { font-size: 32px; margin-bottom: 14px; display: block; }
+  .persona-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--green-deep); margin-bottom: 12px; line-height: 1.35; }
+
+  .persona-row { margin-bottom: 10px; }
+  .persona-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .persona-label.pain { color: var(--red-soft); }
+  .persona-label.solution { color: var(--green-mid); }
+  .persona-text { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; }
+
+  /* ════════════════════════════
+     BRAND STORY
+  ════════════════════════════ */
+  .story-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: center;
+  }
+  @media (max-width: 720px) { .story-wrap { grid-template-columns: 1fr; gap: 40px; } }
+
+  .story-quote {
+    font-family: var(--serif);
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: white;
+    line-height: 1.7;
+    font-weight: 300;
+    border-left: 3px solid var(--green-bright);
+    padding-left: 24px;
+    font-style: italic;
+  }
+  .story-quote em { color: var(--green-bright); font-style: normal; font-weight: 700; }
+
+  .trust-list { list-style: none; margin-top: 32px; }
+  .trust-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+  .trust-list li .icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(82,183,136,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .trust-list li strong { color: white; }
+
+  /* ════════════════════════════
+     HIGHLIGHTS — 6 CARDS
+  ════════════════════════════ */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--green-bright);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 48px;
+  }
+  @media (max-width: 720px) { .highlight-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .highlight-grid { grid-template-columns: 1fr; } }
+
+  .highlight-card {
+    background: white;
+    padding: 36px 28px;
+    transition: background 0.25s;
+  }
+  .highlight-card.summary {
+    grid-column: span 2;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 16px;
+    padding: 48px 40px;
+  }
+  .highlight-card.summary:hover { background: var(--green-pale); }
+  .summary-label { font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--green-mid); }
+  .summary-tagline { font-family: var(--serif); font-size: 30px; font-weight: 900; color: var(--green-deep); line-height: 1.45; word-break: keep-all; }
+  .summary-tagline span { color: var(--green-bright); }
+  .highlight-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+  .highlight-title { font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--green-deep); margin-bottom: 8px; }
+  .highlight-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .highlight-stat { font-size: 24px; font-weight: 700; color: var(--green-bright); font-family: var(--serif); margin-top: 8px; }
+
+  /* ════════════════════════════
+     CP VALUE
+  ════════════════════════════ */
+  .cp-compare {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    align-items: center;
+    margin-top: 48px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cp-card {
+    background: white;
+    border-radius: 4px;
+    padding: 36px 28px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+  }
+  .cp-card.ours { background: var(--green-deep); color: white; }
+  .cp-vs {
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .cp-title { font-family: var(--serif); font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+  .cp-card.ours .cp-title { color: var(--green-bright); }
+  .cp-row { font-size: 14px; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); color: var(--text-mid); }
+  .cp-card.ours .cp-row { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+  .cp-row strong { color: var(--text-dark); }
+  .cp-card.ours .cp-row strong { color: white; }
+  .cp-big { font-family: var(--serif); font-size: 36px; font-weight: 900; color: var(--green-bright); margin-top: 16px; line-height: 1.1; }
+  .cp-big-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  /* ════════════════════════════
+     COMPARE TABLE
+  ════════════════════════════ */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 48px;
+    font-size: 14px;
+  }
+  .compare-table th {
+    padding: 16px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .compare-table th:first-child { background: var(--green-deep); color: white; text-align: left; }
+  .compare-table th:nth-child(2) { background: var(--green-mid); color: white; text-align: center; }
+  .compare-table th:last-child { background: #888; color: white; text-align: center; }
+  .compare-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+  .compare-table td:first-child { font-weight: 600; color: var(--green-deep); background: var(--green-pale); }
+  .compare-table td:nth-child(2) { text-align: center; color: var(--green-mid); font-weight: 500; background: #f5fbf7; }
+  .compare-table td:last-child { text-align: center; color: #999; background: #fafafa; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .check { color: var(--green-bright); font-size: 18px; }
+  .cross { color: #ccc; font-size: 18px; }
+
+  /* ════════════════════════════
+     SCENARIOS
+  ════════════════════════════ */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+  }
+  @media (max-width: 720px) { .scenario-grid { grid-template-columns: 1fr; } }
+
+  .scenario-card {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--green-deep);
+    padding: 40px 28px 32px;
+  }
+  .scenario-num {
+    font-family: var(--serif);
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(82,183,136,0.12);
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .scenario-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .scenario-title { font-family: var(--serif); font-size: 17px; font-weight: 700; color: white; margin-bottom: 12px; }
+  .scenario-quote {
+    font-size: 13px;
+    color: var(--green-bright);
+    font-style: italic;
+    font-family: var(--serif);
+    line-height: 1.6;
+    border-left: 2px solid var(--green-bright);
+    padding-left: 12px;
+    margin-bottom: 14px;
+  }
+  .scenario-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+  /* ════════════════════════════
+     FAQ
+  ════════════════════════════ */
+  .faq-list { margin-top: 48px; }
+  .faq-item {
+    border-bottom: 1px solid #e8e8e8;
+    padding: 24px 0;
+  }
+  .faq-q {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green-deep);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 24px;
+    color: var(--green-bright);
+    flex-shrink: 0;
+    transition: transform 0.25s;
+    font-weight: 300;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding-top: 0;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-top: 16px; }
+
+  /* ════════════════════════════
+     ECOSYSTEM
+  ════════════════════════════ */
+  .eco-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  @media (max-width: 600px) { .eco-grid { grid-template-columns: 1fr; } }
+
+  .eco-card {
+    background: white;
+    border-radius: 4px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    position: relative;
+  }
+  .eco-card.coming::after {
+    content: '即將推出';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--gold);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+  .eco-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+  .eco-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--green-deep); margin-bottom: 8px; }
+  .eco-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ════════════════════════════
+     FINAL CTA
+  ════════════════════════════ */
+  #final-cta {
+    background: var(--green-deep);
+    text-align: center;
+    padding: 120px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  #final-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(82,183,136,0.12) 0%, transparent 70%);
+  }
+  .final-slogan {
+    font-family: var(--serif);
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .final-sub {
+    font-size: 16px;
+    color: var(--green-light);
+    font-style: italic;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .final-btn {
+    display: inline-block;
+    background: var(--green-bright);
+    color: var(--green-deep);
+    font-weight: 700;
+    font-size: 18px;
+    padding: 20px 64px;
+    border-radius: 3px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .final-btn:hover { background: var(--green-light); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(82,183,136,0.4); }
+  .final-trust {
+    margin-top: 32px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    position: relative;
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--green-bright);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--green-bright); border-radius: 2px; }
+
+  /* ── STICKY NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(26,61,43,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(82,183,136,0.15);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 18px; font-weight: 700; color: white; text-decoration: none; }
+  .nav-logo span { color: var(--green-bright); }
+  .nav-cta-small {
+    background: var(--green-bright);
+    color: var(--green-deep);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+  .nav-cta-small:hover { background: var(--green-light); }
+
+  /* ── SLOGAN BAR ── */
+  .slogan-bar {
+    background: var(--gold);
+    text-align: center;
+    padding: 12px 32px;
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">植<span>樂</span>島</a>
+  <a class="nav-cta-small" href="#final-cta">立即選購</a>
+</nav>
+
+<!-- SLOGAN BAR -->
+<div class="slogan-bar" style="margin-top:60px;">
+  種下去，家的氣場就活了。
+</div>
+
+<!-- ════════════════════
+  SECTION 1 — HERO
+════════════════════ -->
+<section id="hero">
+  <div class="hero-leaf">🌿</div>
+  <p class="hero-eyebrow fade-in">智慧水耕蔬果種植機 · 台灣廠商製造</p>
+  <h1 class="hero-title fade-in" style="transition-delay:0.1s">
+    在充滿毒素的生活中，<br>種一座<span>乾淨又療癒的蔬菜島</span>
+  </h1>
+  <p class="hero-slogan fade-in" style="transition-delay:0.2s">
+    小學生也能輕鬆種出一盆好菜！
+  </p>
+  <a href="#final-cta" class="hero-cta fade-in" style="transition-delay:0.3s">我也想在家輕鬆種菜 →</a>
+
+  <div class="hero-badges fade-in" style="transition-delay:0.4s;flex-direction:column;gap:0">
+    <div style="display:flex;gap:40px;justify-content:center;padding-bottom:24px;margin-bottom:24px;width:100%">
+      <div class="hero-badge">
+        <span class="hero-badge-num">300g+</span>
+        <span class="hero-badge-label">每次採收量</span>
+      </div>
+      <div class="hero-badge">
+        <span class="hero-badge-num">3 分鐘</span>
+        <span class="hero-badge-label">水盆清洗</span>
+      </div>
+      <div class="hero-badge">
+        <span class="hero-badge-num">3 秒</span>
+        <span class="hero-badge-label">清洗即可上桌</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:32px;justify-content:center;width:100%">
+      <div class="hero-badge">
+        <span class="hero-badge-num">1000萬</span>
+        <span class="hero-badge-label">產品責任險</span>
+      </div>
+      <div class="hero-badge">
+        <span class="hero-badge-num">1 年</span>
+        <span class="hero-badge-label">台灣在地保固</span>
+      </div>
+      <div class="hero-badge">
+        <span class="hero-badge-num">NT$50</span>
+        <span class="hero-badge-label">每月成本</span>
+      </div>
+      <div class="hero-badge">
+        <span class="hero-badge-num">SGS</span>
+        <span class="hero-badge-label">養液毒物認證</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 2 — RESONANCE
+════════════════════ -->
+<section class="section section-alt" id="resonance">
+  <div class="container">
+    <div class="fade-in">
+      <p class="section-number">Section 02 — 找到你的理由</p>
+      <h2 class="section-title">你是不是也有這樣的感覺？</h2>
+      <div class="divider"></div>
+      <p class="section-sub">植樂島為六種不同生活處境的人而存在。只要有一張打中你，你就知道它是為誰設計的。</p>
+    </div>
+
+    <div class="persona-grid">
+
+      <div class="persona-card accent-red fade-in" data-emoji="🏥">
+        <span class="persona-emoji">🏥</span>
+        <div class="persona-title">注重健康・有慢性病需求的你</div>
+        <div class="persona-row">
+          <div class="persona-label pain">痛點</div>
+          <div class="persona-text">腎臟病、糖尿病讓你對每一口菜都不敢馬虎，超市有機蔬菜貴又無法確認農藥是否洗乾淨。</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-label solution">解方</div>
+          <div class="persona-text">全程親眼見證，從育苗到採收零農藥。3秒清洗，放心吃自己種的菜，給自己放一個蔬菜清洗假。</div>
+        </div>
+      </div>
+
+      <div class="persona-card accent-blue fade-in" data-emoji="🌆" style="transition-delay:0.05s">
+        <span class="persona-emoji">🌆</span>
+        <div class="persona-title">在都市打拼・渴望生命感的你</div>
+        <div class="persona-row">
+          <div class="persona-label pain">痛點</div>
+          <div class="persona-text">家裡缺少生氣，回到家感覺少了什麼。沒時間養複雜的植物，更不想面對寵物的生離死別。</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-label solution">解方</div>
+          <div class="persona-text">一台植樂島讓居家氣場活起來，每天回家都有生命在等你。不費心力，不怕說再見。</div>
+        </div>
+      </div>
+
+      <div class="persona-card fade-in" data-emoji="👨‍👩‍👧" style="transition-delay:0.1s">
+        <span class="persona-emoji">👨‍👩‍👧</span>
+        <div class="persona-title">想為家人做點什麼的你</div>
+        <div class="persona-row">
+          <div class="persona-label pain">痛點</div>
+          <div class="persona-text">孩子黏著3C、長輩退休後沒有重心。你想送一份有溫度的禮物，而不只是一個東西。</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-label solution">解方</div>
+          <div class="persona-text">從播種到採收，是孩子最真實的生命教育；讓長輩找回每天期待的動力，青壯年盡孝的最佳選擇。</div>
+        </div>
+      </div>
+
+      <div class="persona-card accent-gold fade-in" data-emoji="🥂" style="transition-delay:0.15s">
+        <span class="persona-emoji">🥂</span>
+        <div class="persona-title">高端收入・享受聚會品味的你</div>
+        <div class="persona-row">
+          <div class="persona-label pain">痛點</div>
+          <div class="persona-text">家中沙龍聚會想有不一樣的亮點，但現有的居家佈置缺乏生命感與話題性。</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-label solution">解方</div>
+          <div class="persona-text">聚會時現摘香草入菜，朋友驚呼連連。植樂島是最有溫度的生活美學裝置，也可能帶起社群種菜風潮。</div>
+        </div>
+      </div>
+
+      <div class="persona-card accent-purple fade-in" data-emoji="🌱" style="transition-delay:0.2s">
+        <span class="persona-emoji">🌱</span>
+        <div class="persona-title">本就喜歡種植・想要新樂趣的你</div>
+        <div class="persona-row">
+          <div class="persona-label pain">痛點</div>
+          <div class="persona-text">土耕容易有小飛蟲、施肥麻煩、下雨要衝回家，市售水耕機又清洗困難、附贈種子品質參差。</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-label solution">解方</div>
+          <div class="persona-text">無死角水盆3分鐘洗完，搭配農友種子與客製苗盒，每個月都有新品種挑戰，樂趣不會斷。</div>
+        </div>
+      </div>
+
+      <div class="persona-card accent-teal fade-in" data-emoji="🐱" style="transition-delay:0.25s">
+        <span class="persona-emoji">🐱</span>
+        <div class="persona-title">單身族・愛貓人・想養些什麼的你</div>
+        <div class="persona-row">
+          <div class="persona-label pain">痛點</div>
+          <div class="persona-text">台灣25-44歲單身超過470萬人，回家感到孤單，想養動物卻有費用、噪音與生離死別的顧慮。</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-label solution">解方</div>
+          <div class="persona-text">植樂島可種貓草陪伴貓咪，也能為自己增添生活重心。不怕吵、不費心、不用說再見，還能省錢加菜。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 3 — STORY
+════════════════════ -->
+<section class="section section-dark" id="story">
+  <div class="container">
+    <div class="story-wrap">
+      <div class="fade-in">
+        <p class="section-number" style="color:var(--green-bright)">Section 03 — 品牌故事</p>
+        <h2 class="section-title white">為什麼<br>植樂島存在？</h2>
+        <div class="divider"></div>
+        <div class="story-quote">
+          創辦人確診腎臟病後，每天最頭痛的是：市場買回的菜，農藥洗得乾淨嗎？<br><br>
+          因此他買了很多種菜機，但發現清洗麻煩、遇到問題找不到人問。<br><br>
+          於是有機械業背景的他，決定自己研發一台種菜機。<br><br>
+          沒想到種出的蔬菜，清甜到連家人也搶著吃。那一刻他知道——<em>這不只是他一個人需要的東西。</em>
+        </div>
+      </div>
+      <div class="fade-in" style="transition-delay:0.15s">
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">我們的堅持</p>
+        <ul class="trust-list">
+          <li><span class="icon">🧑‍🌾</span><div><strong>小學生也能輕鬆種出一盆好菜</strong><br>0 種菜經驗也不怕，植樂島把所有難題都解決了，你只需要負責感動與採收</div></li>
+          <li><span class="icon">🛡️</span><div><strong>100% 食品級 PP 材質</strong><br>底部具鋼印，接觸食物完全安心</div></li>
+          <li><span class="icon">🧪</span><div><strong>SGS 毒物檢測養液</strong><br>台灣合格肥料大廠代工，特別添加維他命C</div></li>
+          <li><span class="icon">🌾</span><div><strong>農友種子 — 業界台積電</strong><br>種子來源透明，發芽率與健康度業界頂尖</div></li>
+          <li><span class="icon">🏪</span><div><strong>台灣在地一年保固</strong><br>實體門市 + LINE 真人客服，不讓你成為售後孤兒</div></li>
+          <li><span class="icon">📚</span><div><strong>實種教學 + 專屬食譜</strong><br>從育苗到餐桌，每一步都有我們陪</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 4 — HIGHLIGHTS
+════════════════════ -->
+<section class="section" id="highlights">
+  <div class="container">
+    <div class="fade-in">
+      <p class="section-number">Section 04 — 產品核心亮點</p>
+      <h2 class="section-title">每一個產品亮點，<br>都是為了讓你種得更安心、更享受</h2>
+      <div class="divider"></div>
+      <p class="section-sub">我們沒有偷工減料。比你預期的還要認真一些。</p>
+    </div>
+
+    <div class="highlight-grid fade-in" style="transition-delay:0.1s">
+      <div class="highlight-card">
+        <span class="highlight-icon">💰</span>
+        <div class="highlight-title">一個月只需 50 元</div>
+        <div class="highlight-desc">電費 + 種子合計，種出等值 700 元以上的高端水耕蔬菜。越種越省，越吃越安心。</div>
+        <div class="highlight-stat">700元+</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🥗</span>
+        <div class="highlight-title">產地到餐桌 3 秒</div>
+        <div class="highlight-desc">蔬菜採收後營養立即開始流失，自家現摘清洗即食，補充最高峰的維生素與抗氧化物。</div>
+        <div class="highlight-stat">最高營養值</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🧼</span>
+        <div class="highlight-title">無死角水盆設計</div>
+        <div class="highlight-desc">全開放式結構，完全無藏污納垢，3分鐘洗完，像換一盆水一樣輕鬆，終結棄置危機。</div>
+        <div class="highlight-stat">3分鐘清潔</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🌱</span>
+        <div class="highlight-title">客製苗盒 3 週採收</div>
+        <div class="highlight-desc">不用從種子育苗，直接放入定植杯。5種精選品項任選，比市售苗盒株數更多，還能指定品種。</div>
+        <div class="highlight-stat">21天後上桌</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">📚</span>
+        <div class="highlight-title">實種手冊 × 料理食譜</div>
+        <div class="highlight-desc">我們官網有主推菜種的親自實種紀錄，配合各菜種專屬食譜，種完羽衣甘藍，下月換奶油萵苣。</div>
+        <div class="highlight-stat">月月有新菜</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🛡️</span>
+        <div class="highlight-title">台灣在地售後保固</div>
+        <div class="highlight-desc">實體門市、一年保固、LINE真人種植客服、1000萬產品責任險。買完之後我們還在，絕不讓你成為售後孤兒。</div>
+        <div class="highlight-stat">1年保固</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🧑‍🌾</span>
+        <div class="highlight-title">0 經驗也能種出好菜</div>
+        <div class="highlight-desc">不需要任何種植背景，連小學生都能輕鬆種出一盆茂盛的蔬菜。植樂島把所有難題都幫你解決了，你只需要負責感動。</div>
+        <div class="highlight-stat">新手友善</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🔬</span>
+        <div class="highlight-title">食品級 PP 水盆，堅持不用劣質材料</div>
+        <div class="highlight-desc">會接觸到植物根系的水盆，堅持使用 100% 食品級 PP 材質，從蔬菜生長的源頭開始把關，全方位保障每一口菜的乾淨。</div>
+        <div class="highlight-stat">食品級認證</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">🌿</span>
+        <div class="highlight-title">花市幼苗也能種，品種你說了算</div>
+        <div class="highlight-desc">適合水耕的幼苗，從花市買回來直接種。不被任何廠商的苗盒品項綁死，這是市面上其他水耕機做不到的事。</div>
+        <div class="highlight-stat">品種自由選</div>
+      </div>
+      <div class="highlight-card">
+        <span class="highlight-icon">💧</span>
+        <div class="highlight-title">維他命C養液，蔬菜吃得乾淨才長得乾淨</div>
+        <div class="highlight-desc">養液是蔬菜的食物，要吃到乾淨的菜，它吃的東西同樣重要。我們的養液由台灣肥料大廠製造，通過 SGS 各項毒素檢驗，與低價競品附贈的來路不明養液完全不同。</div>
+        <div class="highlight-stat">SGS 毒素認證</div>
+      </div>
+      <div class="highlight-card summary">
+        <div class="summary-label">植樂島的堅持</div>
+        <div class="summary-tagline">
+          你只需要負責感動，<br>
+          <span>其他的我們都想好了！</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 5 — CP VALUE
+════════════════════ -->
+<section class="section section-green" id="cpvalue">
+  <div class="container">
+    <div class="fade-in">
+      <p class="section-number">Section 05 — CP 值計算</p>
+      <h2 class="section-title">這不是一台玩具，<br>而是每月幫你省 700 元的健康投資</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="cp-compare fade-in" style="transition-delay:0.1s">
+      <div class="cp-card">
+        <div class="cp-title">🛒 超市買有機生菜</div>
+        <div class="cp-row"><strong>100g 綜合生菜</strong> = NT$110～235</div>
+        <div class="cp-row">採收後冷藏，<strong>營養已大量流失</strong></div>
+        <div class="cp-row">有機標章不代表農藥為零</div>
+        <div class="cp-row">無法確認水質與運送環境</div>
+        <div class="cp-row" style="border:none;padding-top:12px;color:#aaa;font-size:12px;">買的是商品，感受不到生命成長</div>
+      </div>
+      <div class="cp-vs">VS</div>
+      <div class="cp-card ours">
+        <div class="cp-title">🌿 植樂島自己種</div>
+        <div class="cp-row"><strong>每月電費 + 種子</strong>約 NT$50</div>
+        <div class="cp-row">採收現摘，<strong>營養在最高峰</strong></div>
+        <div class="cp-row">全程親眼見證，零農藥疑慮</div>
+        <div class="cp-row">300g+ 採收量，省下 NT$700 以上</div>
+        <div class="cp-big">省 700元+<br><span style="font-size:16px;font-weight:400">每月</span></div>
+        <div class="cp-big-sub">還有採收感動、居家氣場、陪伴體驗…<br>這些超市永遠給不了</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 6 — COMPARE
+════════════════════ -->
+<section class="section section-alt" id="compare">
+  <div class="container">
+    <div class="fade-in">
+      <p class="section-number">Section 06 — 競品比較</p>
+      <h2 class="section-title">一樣的種菜，<br>不一樣的堅持</h2>
+      <div class="divider"></div>
+      <p class="section-sub">買之前，你應該知道這些差異。一分錢一分貨，這裡說清楚。</p>
+    </div>
+
+    <div class="fade-in" style="transition-delay:0.1s;overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>🌿 植樂島</th>
+            <th>一般低價競品</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>水盆材質</td><td><span class="check">✓</span> 100% 食品級 PP，鋼印為證</td><td><span class="cross">—</span> 材質來源不明，無標示</td></tr>
+          <tr><td>種植彈性</td><td><span class="check">✓</span> 種子、苗盒、花市水耕幼苗皆可種</td><td><span class="cross">—</span> 僅限廠商指定苗盒品項</td></tr>
+          <tr><td>養液安全</td><td><span class="check">✓</span> SGS 認證 + 維他命C，台灣大廠代工</td><td><span class="cross">—</span> 無標示配方，潛在重金屬疑慮</td></tr>
+          <tr><td>種子來源</td><td><span class="check">✓</span> 農友種子，業界品質保證</td><td><span class="cross">—</span> 隨機附贈，來源不透明</td></tr>
+          <tr><td>清潔設計</td><td><span class="check">✓</span> 無死角水盆，3 分鐘洗完</td><td><span class="cross">—</span> 結構複雜，清潔是噩夢</td></tr>
+          <tr><td>種植支援</td><td><span class="check">✓</span> LINE 真人客服 + 詳細實種教學</td><td><span class="cross">—</span> 買完只有機器，無人可問</td></tr>
+          <tr><td>售後保固</td><td><span class="check">✓</span> 台灣在地一年保固 + 實體門市 + 1000萬產品責任險</td><td><span class="cross">—</span> 跨境退換極難，故障即廢棄</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 7 — SCENARIOS
+════════════════════ -->
+<section class="section section-dark" id="scenarios">
+  <div class="container">
+    <div class="fade-in">
+      <p class="section-number" style="color:var(--green-bright)">Section 07 — 使用情境</p>
+      <h2 class="section-title white">想像你用它的樣子</h2>
+      <div class="divider"></div>
+      <p class="section-sub white">真實用戶的四個生活畫面。</p>
+    </div>
+
+    <div class="scenario-grid fade-in" style="transition-delay:0.1s;grid-template-columns:repeat(2,1fr)">
+      <div class="scenario-card">
+        <span class="scenario-num">01</span>
+        <span class="scenario-icon">🌅</span>
+        <div class="scenario-title">健康族群的清晨</div>
+        <div class="scenario-quote">「這是我今天最放心的事。」</div>
+        <div class="scenario-desc">腎友清晨從植樂島採下羽衣甘藍，3秒清洗打入果汁機。不需要相信任何標章，因為這是自己親眼看著長大的。</div>
+      </div>
+      <div class="scenario-card">
+        <span class="scenario-num">02</span>
+        <span class="scenario-icon">🥗</span>
+        <div class="scenario-title">週末聚會的話題</div>
+        <div class="scenario-quote">「這是你種的？！也太厲害了吧！」</div>
+        <div class="scenario-desc">朋友來訪，從植樂島現摘迷迭香放入沙拉。那一刻不只是聚會，而是一場有生命力的生活美學展示。</div>
+      </div>
+      <div class="scenario-card">
+        <span class="scenario-num">03</span>
+        <span class="scenario-icon">👶</span>
+        <div class="scenario-title">孩子與長輩的每一天</div>
+        <div class="scenario-quote">「它是我種的——好吃嗎？」</div>
+        <div class="scenario-desc">孩子每天蹲在旁邊量葉子有沒有長大；阿嬤說「這是我種的」時的驕傲。種菜，給了他們每天起床的理由。</div>
+      </div>
+      <div class="scenario-card">
+        <span class="scenario-num">04</span>
+        <span class="scenario-icon">🪴</span>
+        <div class="scenario-title">單身族的日常陪伴</div>
+        <div class="scenario-quote">「回到家，它還在那裡等我。」</div>
+        <div class="scenario-desc">下班推開門，植樂島的葉子又長大了一點。不用說話，不會抱怨，不需要餵食——只是靜靜地生長，讓家裡多了一份讓人安心的生命感。週末採收、自己下廚，這一頓飯吃起來格外踏實。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 8 — FAQ
+════════════════════ -->
+<section class="section" id="faq">
+  <div class="container" style="max-width:720px">
+    <div class="fade-in">
+      <p class="section-number">Section 08 — 常見問題</p>
+      <h2 class="section-title">還有疑慮嗎？<br>我們都想到了。</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="faq-list fade-in" style="transition-delay:0.1s">
+      <div class="faq-item">
+        <div class="faq-q">植樂島可以種花市買的幼苗嗎？</div>
+        <div class="faq-a">可以！這也是植樂島跟市面上其他水耕機最不一樣的地方之一。只要是適合水耕的幼苗，從花市或園藝店買回來就能直接種進植樂島，品種完全由你自己決定，不用被廠商的苗盒品項限制。不確定哪些幼苗適合水耕？我們的 LINE 客服和實種手冊都有詳細說明，隨時可以問我們。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">養液是化學的嗎？安全嗎？</div>
+        <div class="faq-a">完全不用擔心。我們的養液由台灣合格肥料大廠代工，成分就是植物生長所需的無機礦物質，等同於幫植物補充飲食中的礦物質，更通過 SGS 多項毒物檢測，還特別添加了維他命 C。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">我完全沒種過菜，種得起來嗎？</div>
+        <div class="faq-a">絕對沒問題——連小學生都能用植樂島種出一盆茂盛的好菜。植樂島把光照、水量、營養液都設計好了，你不需要任何種植經驗。我們還提供詳細的實種手冊與 LINE 真人客服全程陪你，也可以直接選購現成苗盒省去育苗步驟，拿到立刻放入，2-3 週就能採收。不怕種不起來，只怕你種上癮。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">清洗保養麻煩嗎？</div>
+        <div class="faq-a">我們的水盆採用全開放式無死角設計，3 分鐘就能洗完，像洗碗一樣輕鬆。這是我們買了多台市售種植機後，針對最大痛點特別設計的。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">跟淘寶蝦皮的種植機差在哪？</div>
+        <div class="faq-a">最大的差異是「你永遠可以找到我們」。台灣在地廠商、實體門市、一年保固、真人客服。材質、養液、種子都有可驗證的來源，不是買完之後的孤兒。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">一台可以用多久？多久回本？</div>
+        <div class="faq-a">機器設計耐用，正常使用可達數年。以月電費約 50 元計算，第一次採收的蔬菜省下的費用，幾個月內即可回本。之後每月種植，等於每月省錢加菜。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">適合送給長輩當禮物嗎？</div>
+        <div class="faq-a">非常適合！許多 70 歲以上的長輩因為退休後失去生活重心，而種植蔬菜能提供每天觀察與照顧的動力。我們的 LINE 客服也能協助長輩解決種植問題。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  SECTION 9 — ECOSYSTEM
+════════════════════ -->
+<section class="section section-green" id="ecosystem">
+  <div class="container">
+    <div class="fade-in">
+      <p class="section-number">Section 09 — 品牌生態圈</p>
+      <h2 class="section-title">種完一種，<br>再來一種</h2>
+      <div class="divider"></div>
+      <p class="section-sub">植樂島不只是一台機器，而是一個持續產生驚喜的生活系統。</p>
+    </div>
+
+    <div class="eco-grid fade-in" style="transition-delay:0.1s">
+      <div class="eco-card">
+        <span class="eco-icon">🌱</span>
+        <div class="eco-title">客製化苗盒</div>
+        <div class="eco-desc">5 種精選品項任選，株數高於市售，可指定品種。不用育苗，拿到就種，2-3 週採收，月月換新菜。</div>
+      </div>
+      <div class="eco-card coming">
+        <span class="eco-icon">🍓</span>
+        <div class="eco-title">水果種植盤</div>
+        <div class="eco-desc">升級版配件，讓植樂島跨越綠意，迎接居家採果的全新體驗。目前實測中，即將推出。</div>
+      </div>
+      <div class="eco-card coming">
+        <span class="eco-icon">🌿</span>
+        <div class="eco-title">發芽機系列</div>
+        <div class="eco-desc">完整品牌商品圈持續擴展中，如同 Apple 生態系，讓你的健康廚房越來越完整。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════
+  FINAL CTA
+════════════════════ -->
+<section id="final-cta">
+  <div class="final-slogan fade-in">種下去，<br>家的氣場就活了。</div>
+  <div class="final-sub fade-in" style="transition-delay:0.1s">現在，讓植樂島進入你的家。</div>
+  <a href="#" class="final-btn fade-in" style="transition-delay:0.2s">🛒 立即選購植樂島</a>
+  <div class="final-trust fade-in" style="transition-delay:0.3s">
+    台灣製造 ｜ SGS 認證 ｜ 100% 食品級 PP ｜ 一年保固 ｜ LINE 真人客服
+  </div>
+</section>
+
+<script>
+// Intersection Observer for fade-in
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
