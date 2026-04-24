@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>植樂島 Plant Island — 量產用單元式種植箱型錄</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --deep: #1a2f3a; --mid: #2c5f6e; --accent: #3a9cb0;
+    --pale: #b8dce6; --bg: #eef5f7; --cream: #f8fafb;
+    --gray-dark: #2a2a2a; --gray-mid: #555; --gray-light: #999; --white: #fff;
+  }
+  body { font-family: 'Noto Sans TC', sans-serif; background: #ddd; display: flex; justify-content: center; padding: 20px; }
+  .page { width: 794px; min-height: 1123px; background: var(--cream); overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.25); }
+
+  /* HEADER */
+  .header { background: var(--deep); display: flex; align-items: stretch; height: 90px; }
+  .header-brand { display: flex; align-items: center; padding: 0 20px; }
+  .header-divider { width: 1px; background: rgba(255,255,255,0.15); margin: 16px 0; }
+  .header-title { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 28px; }
+  .header-title h2 { font-family: 'Noto Serif TC', serif; font-size: 19px; font-weight: 600; color: var(--white); letter-spacing: 4px; }
+  .header-title .en { font-size: 10.5px; font-weight: 300; color: var(--pale); letter-spacing: 2px; margin-top: 3px; }
+  .header-tag { background: var(--mid); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 20px; gap: 2px; }
+  .header-tag div { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+  .header-tag span { font-size: 8px; font-weight: 300; color: var(--pale); letter-spacing: 2px; }
+  .accent-bar { height: 4px; background: linear-gradient(90deg, var(--deep), var(--accent), var(--pale)); }
+
+  /* SECTIONS */
+  .section { padding: 20px 28px; border-bottom: 1px solid var(--pale); }
+  .section-label { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .section-num { width: 22px; height: 22px; background: var(--mid); color: var(--white); border-radius: 50%; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-label h3 { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 600; color: var(--deep); letter-spacing: 1px; }
+  .section-label .en-label { font-size: 11px; color: var(--gray-light); letter-spacing: 1px; margin-left: 4px; }
+
+  /* DESC */
+  .desc-text { font-size: 13px; line-height: 2; color: var(--gray-dark); font-weight: 300; }
+
+  /* FEATURES */
+  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; margin-top: 12px; }
+  .feature-card { background: var(--bg); border-radius: 8px; padding: 14px 16px; border-left: 3px solid var(--accent); }
+  .feature-card h4 { font-size: 13px; font-weight: 600; color: var(--deep); margin-bottom: 5px; letter-spacing: 0.5px; }
+  .feature-card p { font-size: 11.5px; line-height: 1.7; color: var(--gray-mid); font-weight: 300; }
+
+  /* SPEC TABLE */
+  .spec-table { margin-top: 10px; width: 100%; border-collapse: collapse; font-size: 12px; }
+  .spec-table th { background: var(--deep); color: var(--white); padding: 7px 14px; text-align: left; font-weight: 500; letter-spacing: 0.5px; }
+  .spec-table td { padding: 7px 14px; border-bottom: 1px solid var(--pale); color: var(--gray-dark); font-weight: 300; }
+  .spec-table tr:nth-child(even) td { background: var(--bg); }
+  .spec-table .label-col { width: 22%; color: var(--deep); font-weight: 500; white-space: nowrap; }
+
+  /* APPLICATION */
+  .app-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .app-tag { background: var(--bg); border: 1px solid var(--pale); border-radius: 20px; padding: 5px 14px; font-size: 11.5px; color: var(--mid); font-weight: 400; letter-spacing: 0.5px; }
+
+  /* IMAGE PLACEHOLDER */
+  .img-placeholder { width: 100%; height: 180px; background: var(--bg); border: 2px dashed var(--pale); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gray-light); font-size: 13px; letter-spacing: 1px; margin-top: 12px; }
+
+  /* FOOTER */
+  .footer { background: var(--deep); padding: 10px 28px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-info { display: flex; flex-direction: column; gap: 3px; }
+  .footer-info p { font-size: 11px; color: var(--pale); font-weight: 300; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-brand">
+      <div style="height:80px;width:140px;border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+        <img src="/mnt/user-data/uploads/LOGO.jpg" alt="植樂島 Logo" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-title">
+      <h2>植 樂 方 舟　Plant Island Ark</h2>
+      <div class="en">Plant Island Ark — 量產級積木式智慧種植機 &nbsp;｜&nbsp; <span style="color:#7ec8d8;letter-spacing:1.5px;font-style:italic;">Design in Taiwan</span></div>
+    </div>
+    <div class="header-tag">
+      <div>COMMERCIAL</div>
+      <span>GRADE</span>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <!-- 1. 產品應用 -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">1</div>
+      <h3>產品應用</h3><span class="en-label">Description</span>
+    </div>
+    <p class="desc-text">本產品為量產級室內水耕種植系統，採積木式單體設計，可像積木般自由堆疊於任何大小的室內空間。搭配智慧 LED 光源自動調整高度與亮度、單體自循環養液系統、模擬自然風促進莖幹強壯，適用於閒置空間、學校教室、空廠房、貨櫃等封閉場所。無需土壤、無農藥，操作簡單，無種植經驗者亦能快速量產安全蔬菜，實現計畫性生產。</p>
+    <div class="img-placeholder">產品實拍照片（待補）</div>
+  </div>
+
+  <!-- 2. 核心優勢 -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">2</div>
+      <h3>六大核心優勢</h3><span class="en-label">Key Advantages</span>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h4>A. 如積木般自由堆疊</h4>
+        <p>單體可如積木般自由堆疊，佈滿任何室內空間，只要有電即可運作。空間利用率極大化。</p>
+      </div>
+      <div class="feature-card">
+        <h4>B. 量產級產能</h4>
+        <p>單箱可種萵苣 25 顆或 Baby 菜 85 穴，產出量非一般市售家用產品可比擬。</p>
+      </div>
+      <div class="feature-card">
+        <h4>C. LED 自動調整高度與亮度</h4>
+        <p>依據植株生長階段自動調整光照距離與亮度，無需全亮運作，大幅降低電力消耗。台灣獨家技術。</p>
+      </div>
+      <div class="feature-card">
+        <h4>D. 清洗方便安全</h4>
+        <p>具備自動排水功能，水槽可抽拉清潔，不因滿水位拖出時溢出，抽乾後重量輕便於人員作業。</p>
+      </div>
+      <div class="feature-card">
+        <h4>E. 單體自循環零交叉感染</h4>
+        <p>單體皆為獨立養液循環系統，不同植物分泌的酶不會互相影響。因此，若單體感染了細菌病毒，也不會影響其他機台。</p>
+      </div>
+      <div class="feature-card">
+        <h4>F. APP 一鍵智慧種植</h4>
+        <p>連網後臺搭配手機 APP，內建各菜種成長參數。定植完成後點選品種圖示（如綠火焰萵苣），即自動運作升降光照、養液、補液、增氧、風吹等智慧種植系統。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 適用場景 -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">3</div>
+      <h3>適用場景</h3><span class="en-label">Application Scenarios</span>
+    </div>
+    <div class="app-tags">
+      <span class="app-tag">辦公室</span>
+      <span class="app-tag">餐廳 / 飯店</span>
+      <span class="app-tag">學校教室</span>
+      <span class="app-tag">社區共耕</span>
+      <span class="app-tag">閒置封閉空間</span>
+      <span class="app-tag">貨櫃農場</span>
+      <span class="app-tag">爛尾樓再利用</span>
+      <span class="app-tag">空廠房</span>
+      <span class="app-tag">企業 ESG 永續方案</span>
+      <span class="app-tag">海島 / 蔬菜生產不易地區之基礎建設</span>
+      <span class="app-tag">人口老化國家之農業基礎建設</span>
+    </div>
+  </div>
+
+  <!-- 4. 產品特性總覽 -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">4</div>
+      <h3>產品特性總覽</h3><span class="en-label">Features</span>
+    </div>
+    <table class="spec-table">
+      <thead>
+        <tr><th class="label-col">項目</th><th>說明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label-col">種植容量</td><td>單體萵苣 25 顆 / Baby 菜 85 穴</td></tr>
+        <tr><td class="label-col">光源系統</td><td>全光譜 LED，自動調整高度與亮度（台灣獨家技術）</td></tr>
+        <tr><td class="label-col">養液系統</td><td>單體獨立自循環，自動補液，含氧量強化</td></tr>
+        <tr><td class="label-col">風吹系統</td><td>內建風扇模擬自然風，促進莖幹強壯、植株健康生長</td></tr>
+        <tr><td class="label-col">堆疊方式</td><td>如積木般自由堆疊，適應任意室內空間大小</td></tr>
+        <tr><td class="label-col">清洗設計</td><td>自動排水、水槽可抽拉清潔、抽乾後輕量作業</td></tr>
+        <tr><td class="label-col">防交叉感染</td><td>單體獨立循環，不同機台養液互不影響</td></tr>
+        <tr><td class="label-col">管理系統</td><td>連網後臺 + 手機 APP，一鍵選種自動運作，內建各菜種成長參數</td></tr>
+        <tr><td class="label-col">操作門檻</td><td>完整配套與教學，無需專業種植知識</td></tr>
+        <tr><td class="label-col">食品安全</td><td>無毒無農藥，計畫性量產安全蔬菜</td></tr>
+        <tr><td class="label-col">耐用性</td><td>耗材少、低維護成本、長期穩定運作</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- 5. 配套系統 -->
+  <div class="section">
+    <div class="section-label">
+      <div class="section-num">5</div>
+      <h3>完整配套系統</h3><span class="en-label">Complete Solution</span>
+    </div>
+    <div class="app-tags">
+      <span class="app-tag">箱體主機</span>
+      <span class="app-tag">營養液</span>
+      <span class="app-tag">種子</span>
+      <span class="app-tag">定植杯 / 海綿</span>
+      <span class="app-tag">作業配件</span>
+      <span class="app-tag">水耕技術指導</span>
+      <span class="app-tag">管理後臺</span>
+      <span class="app-tag">架設工程</span>
+      <span class="app-tag">自動化工程</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-info">
+      <p>盛富創研股份有限公司</p>
+      <p>統編：60629260</p>
+      <p>電話：04-2407-7017</p>
+      <p>地址：412 台中市大里區環中東路 7 段 28 巷 8 號</p>
+      <p>Email：contact@sheng-future.com</p>
+      <p>官網：www.plant-island.tw（coming soon）</p>
+    </div>
+    <div>
+      <img src="/mnt/user-data/outputs/盛富創研-LOGO-colored.png"
+           alt="盛富創研 Logo"
+           style="height:120px; width:auto; object-fit:contain; display:block;">
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
